@@ -3,6 +3,8 @@ package com.example.StockTrack.services;
 import com.example.StockTrack.models.Sale;
 import com.example.StockTrack.models.SaleDetail;
 import com.example.StockTrack.repository.SaleRepository;
+import jakarta.transaction.Transactional;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,4 +24,10 @@ public class SaleService {
         return saleRepository.save(sale);
     }
 
+    @Transactional
+    public List<Sale> getSales(){
+        List<Sale> sales = saleRepository.findAll();
+        sales.forEach(sale -> Hibernate.initialize(sale.getDetails()));
+        return sales;
+    }
 }

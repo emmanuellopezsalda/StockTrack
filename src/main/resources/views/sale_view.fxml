@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.StockTrack.controllers.SaleController">
+    <TableView fx:id="tableSales">
+        <columns>
+            <TableColumn fx:id="colId" text="ID"/>
+            <TableColumn fx:id="colTotal" text="Total"/>
+            <TableColumn fx:id="colDate" text="Fecha"/>
+            <TableColumn fx:id="colProducts" text="Productos"/>
+        </columns>
+    </TableView>
+</AnchorPane>
