@@ -1,17 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.StockTrack.controllers.SaleController">
-    <TableView fx:id="tableSales">
+<VBox spacing="10" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.StockTrack.controllers.SaleController">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Título del sistema -->
+    <HBox>
+        <padding>
+            <Insets left="5" bottom="10"/>
+        </padding>
+        <Label text="🛒 StockTrack">
+            <font>
+                <Font name="System Bold" size="24"/>
+            </font>
+        </Label>
+    </HBox>
+
+    <!-- Campo para escanear código de barras -->
+    <HBox style="-fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-background-color: white;">
+        <padding>
+            <Insets top="5" right="5" bottom="5" left="5"/>
+        </padding>
+        <TextField fx:id="inputCode" promptText="Scan barcode or enter product ID..."
+                   prefHeight="40" HBox.hgrow="ALWAYS" onAction="#registerSale"/>
+    </HBox>
+
+    <!-- Tabla de productos en la venta actual -->
+    <TableView fx:id="tableCurrentSale" VBox.vgrow="ALWAYS" style="-fx-border-color: transparent;">
+        <placeholder>
+            <Label text="No hay productos en el carrito"/>
+        </placeholder>
         <columns>
-            <TableColumn fx:id="colId" text="ID"/>
-            <TableColumn fx:id="colTotal" text="Total"/>
-            <TableColumn fx:id="colDate" text="Fecha"/>
-            <TableColumn fx:id="colProducts" text="Productos"/>
+            <TableColumn fx:id="colName" text="Producto" prefWidth="250"/>
+            <TableColumn fx:id="colPrice" text="Precio" prefWidth="100"/>
+            <TableColumn fx:id="colQuantity" text="Cantidad" prefWidth="100"/>
+            <TableColumn fx:id="colActions" text="Acciones" prefWidth="150"/>
         </columns>
     </TableView>
-</AnchorPane>
+
+    <!-- Panel de total -->
+    <HBox alignment="CENTER_LEFT" style="-fx-background-color: #e8f1ff; -fx-border-radius: 5;">
+        <padding>
+            <Insets top="15" right="15" bottom="15" left="15"/>
+        </padding>
+        <Label text="🔹 Total:" HBox.hgrow="ALWAYS">
+            <font>
+                <Font name="System Bold" size="18"/>
+            </font>
+        </Label>
+        <Label fx:id="totalSale" text="0" textFill="#3971df">
+            <font>
+                <Font name="System Bold" size="18"/>
+            </font>
+        </Label>
+    </HBox>
+
+    <!-- Botón de finalizar compra -->
+    <Button text="Finalizar Compra" prefWidth="200" prefHeight="40"
+            style="-fx-background-color: #007bff; -fx-text-fill: white;"
+            onAction="#finalizeSale">
+        <VBox.margin>
+            <Insets top="10"/>
+        </VBox.margin>
+    </Button>
+
+    <!-- Historial de ventas -->
+    <Label text="Historial de Ventas">
+        <font>
+            <Font name="System Bold" size="16"/>
+        </font>
+        <VBox.margin>
+            <Insets top="20" bottom="5"/>
+        </VBox.margin>
+    </Label>
+
+    <TableView fx:id="tableSales" prefHeight="200" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+            <TableColumn fx:id="colDate" text="Fecha" prefWidth="150"/>
+            <TableColumn fx:id="colProducts" text="Productos" prefWidth="300"/>
+            <TableColumn fx:id="colTotal" text="Total" prefWidth="100"/>
+        </columns>
+    </TableView>
+</VBox>

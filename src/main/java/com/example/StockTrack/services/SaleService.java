@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -16,11 +17,18 @@ public class SaleService {
     @Autowired
     private SaleRepository saleRepository;
 
-    public Sale registerSale(List<SaleDetail> details){
-        BigDecimal total = details.stream()
-                .map(SaleDetail::getSubTotal)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        Sale sale = new Sale(details, total);
+    public Sale registerSale(List<SaleDetail> details) {
+        Sale sale = new Sale();
+        sale.setDateTime(LocalDateTime.now());
+        sale.setDetails(details);
+
+        BigDecimal total = BigDecimal.ZERO;
+        for (SaleDetail detail : details) {
+            detail.setSale(sale);
+            total = total.add(detail.getSubTotal());
+        }
+        sale.setTotal(BigDecimal.valueOf(total.doubleValue()));
+
         return saleRepository.save(sale);
     }
 

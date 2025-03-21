@@ -13,4 +13,5 @@ public class ProductService {
     public Product findByBarcode(String barcode){
         return productRepository.findByBarcode(barcode);
     }
+
 }
